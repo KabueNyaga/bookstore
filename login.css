@@ -1,0 +1,88 @@
+:root{
+    --gray-color:#3c3c43;
+    --orange-color:#d87821;
+}
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:linear-gradient(20deg,var(--orange-color), var(--gray-color));
+    border: 1px solid black;
+    margin: 0;
+    height: 680px;
+}
+.login-form{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    border-radius: 10px;
+    width: 350px;
+    height: 420px;
+    background-color: var(--gray-color);
+}
+img{
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    margin: 60px 0 0 0;
+}
+.l-form{
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+    margin: 165px 0 0 0;
+}
+input{
+    width: 180px;
+    height: 50px;
+    margin: 20px 0 0 35px;
+    background-color: #f2caa7;
+    border: 0;
+    border-radius: 5px;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+.login-button{
+    width: 160px;
+    height: 40px;
+    margin: 15px 0 0 0;
+    background-color: var(--orange-color);
+    border: 0;
+    border-radius: 10px;
+    transition: transform 300ms ease-in-out 0.1ms;
+    font-size: 18px;
+    letter-spacing: 8px;
+    color: #202020;
+}
+.login-button:hover{
+    cursor: pointer;
+    transform: scale(1.1,1.1);
+}
+.forgot_pass-link{
+    width: 100%;
+    float: right;
+    right: -65px;
+    top: 225px;
+    position: absolute;
+    color: var(--orange-color);
+}
+ion-icon{
+    position: absolute;
+    margin: 35px 15px 0 -5px;
+    font-size: 30px;
+    color: var(--orange-color);
+}
+::placeholder{
+    text-align: center;
+    letter-spacing: 10px;
+    color: black;
+
+}
+.div-h2{
+    color: var(--orange-color);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+}
