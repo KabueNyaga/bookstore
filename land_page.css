@@ -1,0 +1,33 @@
+:root{
+    --gray-color:#393e41;
+    --orange-color:#d87821;
+}
+.top-section{
+    width: 1500px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    background-color: var(--gray-color);
+    margin: -8px 0px 0 -10px;
+}
+img{
+    height: 100px;
+}
+p{
+    position: absolute;
+    float: right;
+    right: 30px;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #f0cba9;
+}
+.user-name,.logout-link{
+    color: var(--orange-color);
+    font-family: Arial Rounded MT Bold;
+}
+.logout-link{
+    float: right;
+    right: 30px;
+    position: absolute ;
+    top: 65px;
+}

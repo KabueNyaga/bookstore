@@ -1,0 +1,73 @@
+:root{
+    --gray-color:#3c3c43;
+    --orange-color:#d87821;
+}
+.wrapper{
+    width: 500px;
+    height: 600px;
+    background-color: var(--gray-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    border-radius: 10px;
+}
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:linear-gradient(20deg,var(--orange-color), var(--gray-color));
+    border: 1px solid black;
+    margin: 0;
+    height: 680px;
+}
+input{
+    width: 180px;
+    height: 30px;
+    margin: 50px 0 0 0px;
+    background-color: #f2caa7;
+    border: 0;
+    border-radius: 5px;
+}
+.labels{
+    color: var(--orange-color);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+    font-size: 18px;
+    position: relative;
+    margin: 0 10px 0 0;
+}
+img{
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    margin: 60px 0 0 0;
+}
+.reg-form{
+    position: absolute;
+    width: 400px;
+    height: 350px;
+    margin: 165px 0 0 0;
+}
+.btn{
+    width: 160px;
+    height: 40px;
+    margin: 80px 0 0 25px;
+    background-color: var(--orange-color);
+    border: 0;
+    border-radius: 10px;
+    transition: transform 300ms ease-in-out 0.1ms;
+    font-size: 18px;
+    letter-spacing: 8px;
+    color: #202020;
+}
+.welcome-stmt{
+    color: #f2caa7;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+}
+.invalid-feedback{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+    color: rgb(236, 93, 93);
+    position: absolute;
+    margin: 10px 0 0 -40px;
+} 
