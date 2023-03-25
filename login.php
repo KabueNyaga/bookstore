@@ -101,7 +101,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <body>
         <div class="login-form">
             <img src="bookstore-lg.jpg"> 
-            <h2 class="div-h2">WELCOME BACK</h2>
+            <h2 class="div-h2">WELCOME</h2>
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="l-form" method="post">
                 <label for="username">
                     <ion-icon name="person"></ion-icon><input type="text" name="username" placeholder="username" required><br>
