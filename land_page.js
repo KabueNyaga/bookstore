@@ -1,36 +1,33 @@
-function link1(){
-    location.href="#";
-    
-}
-function link2(){
-    location.href="#";
-    
-}
-function link3(){
-    location.href="#";
-    
-}
-function link4(){
-    location.href="#";
-    
-}
-function link5(){
-    location.href="#";
-    
-}
-function link6(){
-    location.href="#";
-    
-}
-function link7(){
-    location.href="#";
-    
-}
-function link8(){
-    location.href="#";
-    
-}
-function link9(){
-    location.href="#";
-    
-}
+document.addEventListener('click',function(l){
+    let el_id=l.target.id;
+
+    switch(el_id){
+        case 'nav-button1':
+            location.href='#';
+            break;
+        case 'nav-button2':
+            location.href='#';
+            break;
+        case 'nav-button3':
+            location.href='#';
+            break;
+        case 'nav-button4':
+            location.href='#';
+            break;
+        case 'nav-button5':
+            location.href="#";
+            break;
+        case 'nav-button6':
+            location.href='#';
+            break;
+        case 'nav-button7':
+            location.href='#';
+            break;
+        case 'nav-button8':
+            location.href='#';
+            break;
+        case 'nav-button9':
+            location.href='#';
+            break;  
+    }
+})

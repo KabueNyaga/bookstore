@@ -27,31 +27,31 @@ $user=$_SESSION["username"];
         <section class="nav-sec">
             <h2 class="dash">Dashboard</h2>
             <div class="nav-button-container">
-            <div class="nav-buttons" onclick="link1()">
+            <div class="nav-buttons" id="nav-button1" >
                 <p class="button-desc">INVENTORY</p>
             </div>
-            <div class="nav-buttons" onclick="link2()">
+            <div class="nav-buttons" id="nav-button2" >
             <p class="button-desc">SUPPLIERS</p>
             </div>
-            <div class="nav-buttons" onclick="link3()">
+            <div class="nav-buttons" id="nav-button3" >
                 <p class="button-desc">SALES</p>
             </div>
-            <div class="nav-buttons" onclick="link4()">
+            <div class="nav-buttons" id="nav-button4" >
             <p class="button-desc">ORDERS</p>
             </div>
-            <div class="nav-buttons" onclick="link5()">
+            <div class="nav-buttons" id="nav-button5" >
             <p class="button-desc">CLIENT ORDERS</p>
             </div>
-            <div class="nav-buttons" onclick="link6()">
+            <div class="nav-buttons" id="nav-button6">
             <p class="button-desc">DELIVERIES</p>
             </div>
-            <div class="nav-buttons" onclick="link7()">
+            <div class="nav-buttons" id="nav-button7" >
             <p class="button-desc">SUPPLIER PAYMENT</p>
             </div>
-            <div class="nav-buttons" onclick="link8()">
+            <div class="nav-buttons" id="nav-button8">
             <p class="button-desc">ENTRY FORMS</p>
             </div>
-            <div class="nav-buttons" onclick="link9()">
+            <div class="nav-buttons" id="nav-button9" >
                 <p class="button-desc">REPORTS</p>
             </div>
             </div>  
