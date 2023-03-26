@@ -6,37 +6,37 @@ Tables
         -item name
         -item quantity
         -item cost
-    7.Sales
+    2.Sales
         -sale id
         -item(foreign key from inventory)
         -mode of payment
         -date of purchase
         -quantity
         -total price
-    8.Client orders
+    3.Client orders
         -client id
         -first name
         -second name
         -email
         -phone
         -order id(foreign key from orders table)
-    9.Supplier
+    4.Supplier
         -supplier id
         -name
         -email
         -phone
         -address
-    10.Orders
+    5.Orders
         -order id
         -item id
         -quantity
         -price per item 
         -supplier id(foreign key from supplies table)
-    11.Deliverlies
+    6.Deliverlies
         -deliverly id
         -order id(foreign key form orders)
         -deliverly date
-    12.Supplier payment
+    7.Supplier payment
         -payment id
         -deliverly id(foreign key from delivery table)
         -date of payment
