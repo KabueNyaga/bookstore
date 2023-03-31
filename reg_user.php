@@ -17,20 +17,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     } else{
         // Prepare a select statement
         $sql = "SELECT id FROM users WHERE username = ?";
-        
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
-            
-            // Set parameters
-            $param_username = trim($_POST["username"]);
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                
-                if(mysqli_stmt_num_rows($stmt) == 1){
+        $usr=trim($_POST["username"]);
+        $param=array($usr);
+
+        if($stmt = sqlsrv_prepare($conn, $sql,$param)){
+            if(sqlsrv_execute($stmt)){
+                if(sqlsrv_has_rows($stmt)){
                     $username_err = "This username is already taken !";
                 } else{
                     $username = trim($_POST["username"]);
@@ -38,12 +30,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
-
-            // Close statement
-            mysqli_stmt_close($stmt);
         }
     }
-    
     // Validate password
     if(empty(trim($_POST["password"]))){
         $password_err = "Please enter a password !";     
@@ -67,32 +55,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
         $date=date('Y/m/d H:i:s');
         // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password, created_at) VALUES (?, ?,'$date')";
+        $sql = "INSERT INTO users (username, pass, created_at) VALUES (?, ?,'$date')";
+        $passhash=password_hash($password,PASSWORD_DEFAULT);
+        $params=array($username,$passhash,$date);
         
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
-            
-            // Set parameters
-            $param_username = $username;
-            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                // Redirect to login page
-                header("location: login.php");
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
-
-            // Close statement
-            mysqli_stmt_close($stmt);
+        $stmt=sqlsrv_prepare( $conn,$sql,$params);
+        if(sqlsrv_execute($stmt)){
+            header("location:login.php");
+            sqlsrv_close($conn);
         }
+        }
+        sqlsrv_free_stmt($stmt);
     }
     
+    
     // Close connection
-    mysqli_close($link);
-}
+    sqlsrv_close($conn);
+
 ?>
  
 <!DOCTYPE html>

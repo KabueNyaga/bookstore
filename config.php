@@ -1,12 +1,13 @@
 <?php
-    define('DB_SERVER', 'localhost');
-    define('DB_USERNAME','book_admin');
-    define('DB_PASSWORD','egg');
-    define('DB_NAME','bookstore');
+    $db_server="UNKNOWN";
+    $db_name="bookstore";
+    $db_user="";
+    $db_pass="";
 
-    $link=mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_NAME);
-
-    if($link==false){
-        die("CONNECTION ERROR");
-    }
+    $connection_info=array(
+        "Database" => $db_name,
+        "Uid" => $db_user,
+        "PWD" => $db_pass
+    );
+    $conn=sqlsrv_connect($db_server,$connection_info);
 ?>
