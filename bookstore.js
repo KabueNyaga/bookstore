@@ -24,12 +24,17 @@ document.addEventListener('click',function(l){
             location.href='#';
             break;
         case 'nav-button8':
-            location.href='#';
+            location.href='entry_forms.php';
             break;
         case 'nav-button9':
             location.href='#';
-            break;  
+            break;
+        case 'nav-button1-1':
+            document.body.style.background="linear-gradient(55deg,#3c3c43,#d87821)"; 
+            document.body.style.height="665px"
+            document.querySelector(".inv-form").style.display="flex"; 
+            document.querySelector(".nav-sec").style.display="none";  
+            break;
     }
 })
-
-
+    

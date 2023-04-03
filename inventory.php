@@ -34,14 +34,14 @@
         </section>
         <section class="nav-panel">
             <ul class="nav-panel-ul">
-                <a href="#" class="nav-panel-a first "><li class="nav-panel-li on-page">INVENTORY</li></a>
+                <a href="inventory.php" class="nav-panel-a first "><li class="nav-panel-li on-page">INVENTORY</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">SUPPLIER</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">SALED</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">ORDERS</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">CLIENT ORDERS</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">DELIVERY</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">SUPPLIER PAYMENT</li></a>
-                <a href="#" class="nav-panel-a"><li class="nav-panel-li">ENTRY FORMS</li></a>
+                <a href="entry_forms.php" class="nav-panel-a"><li class="nav-panel-li">ENTRY FORMS</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">REPORTS</li></a>
             </ul>
         </section>

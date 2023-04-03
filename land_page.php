@@ -16,7 +16,7 @@ $user=$_SESSION["username"];
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="land_page.css"/>
-        <script type="text/javascript"  src="land_page.js"></script>
+        <script type="text/javascript"  src="bookstore.js"></script>
     </head>
     <body>
         <section class="top-section">
