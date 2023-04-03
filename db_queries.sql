@@ -79,8 +79,9 @@ update suppliers set email='macclintx@gmail.com' where supplierID='spp001';
 select * from users;
 alter table users add created_at datetime;
 
-
 sp_help users;
+use bookstore;
+select * from inventory;
 
 
 

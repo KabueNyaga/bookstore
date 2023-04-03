@@ -61,8 +61,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     }
                 } else{
                     // Username doesn't exist, display a generic error message
-                    //$login_err = "Invalid username.";
-                    die(print_r(sqlsrv_errors()));
+                    $login_err = "Invalid username.";
+                    //die(print_r(sqlsrv_errors()));
                 }
             } else{
                 echo "Oops! Something went wrong. Please try again later.";

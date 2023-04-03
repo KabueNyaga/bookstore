@@ -3,7 +3,7 @@ document.addEventListener('click',function(l){
 
     switch(el_id){
         case 'nav-button1':
-            location.href='#';
+            location.href='inventory.php';
             break;
         case 'nav-button2':
             location.href='#';
@@ -31,3 +31,5 @@ document.addEventListener('click',function(l){
             break;  
     }
 })
+
+

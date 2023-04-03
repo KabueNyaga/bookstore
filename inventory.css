@@ -1,0 +1,133 @@
+:root{
+    --gray-color:#393e41;
+    --orange-color:#d87821;
+}
+body{
+   background-color: #f0cba9;
+
+}
+.top-section{
+    width: 101%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    background-color: var(--gray-color);
+    margin: -10px 0px 0 -9px;
+    position: fixed;
+    z-index: 1;
+}
+img{
+    height: 100px;
+}
+p{
+    position: absolute;
+    float: right;
+    right: 20px;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #f0cba9;
+}
+.logout-link{
+    float: right;
+    right: 20px;
+    position: absolute ;
+    top: 65px;
+}
+.user-name,.logout-link{
+    color: var(--orange-color);
+    font-family: Arial Rounded MT Bold;
+}
+.nav-panel{
+    width: 100%; 
+}
+.nav-panel-ul{
+    position: fixed;
+    display: flex;
+    margin: 90px 0 0 -8px;
+    width: 1324px;
+    background-color: #b85900;
+    z-index: 1;
+}
+.nav-panel-li:hover{
+    transform: scale(1.1,1.1);
+}
+.nav-panel-li{
+    position: relative;
+    margin: 0 10px 0 0px;
+    width: 145px;
+    height: 35px;
+    background-color: var(--orange-color);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:transform 300ms ease-in-out 0.1ms;
+}
+.first{
+    margin-left: -55px;
+}
+.nav-panel-a{
+    text-decoration: none;
+    font-size: 14px;
+    color: var(--gray-color);
+    font-family:Arial Rounded MT Bold ;
+}
+.on-page{
+    background-color: #f0cba9;
+    
+}
+
+.search-inv{
+    position: absolute;
+    margin: 90px 0 250px 0;
+    width: 1100px;
+}
+th,td{
+    text-align: center;
+}
+
+.tables{
+    position: absolute;
+    margin-top: 170px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+th,td,table{
+    border-collapse: collapse;
+}
+th{
+    background-color: #393e41; 
+}
+th,td{
+    padding: 10px;
+    border-bottom: 2px solid var(--gray-color);
+}
+.search{
+    width: 350px;
+    height: 40px;
+    border: 0;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 8px;
+}
+button{
+    position: absolute;
+    margin: 0px 0 0 -40px;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 5px;
+    background-color:white;
+}
+ion-icon{
+    color: var(--orange-color);
+    font-size: 28px;
+}
+::placeholder{
+    font-size: 18px;
+    letter-spacing: 30px;
+    text-align: center;
+}

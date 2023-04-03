@@ -6,7 +6,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    background:linear-gradient(20deg,var(--orange-color), var(--gray-color));
+    background: linear-gradient(55deg, var(--gray-color),var(--orange-color));
     border: 1px solid black;
     margin: 0;
     height: 680px;
