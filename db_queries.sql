@@ -79,9 +79,16 @@ update suppliers set email='macclintx@gmail.com' where supplierID='spp001';
 select * from users;
 alter table users add created_at datetime;
 
-sp_help users;
+sp_help inventory;
 use bookstore;
 select * from inventory;
 
+create procedure select_inv @ItemID nvarchar(255) as select * from inventory where ItemID =@ItemID;
+exec select_inv @ItemID='a005';
+drop procedure select_inv;
+select * from Client_orders;
+select *from orders;
+delete from inventory where SupplierID='spp011' and Item_name='sdfds';
+alter table inventory drop column supplierID;
 
 
