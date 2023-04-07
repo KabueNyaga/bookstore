@@ -9,7 +9,7 @@
 
     require_once "config.php";
 
-    $sql="SELECT * FROM inventory";
+    $sql="SELECT * FROM suppliers";
     $result=sqlsrv_query($conn,$sql);
     $rows=sqlsrv_fetch_array($result,SQLSRV_FETCH_ASSOC);
     
@@ -34,8 +34,8 @@
         </section>
         <section class="nav-panel">
             <ul class="nav-panel-ul">
-                <a href="inventory.php" class="nav-panel-a first "><li class="nav-panel-li on-page">INVENTORY</li></a>
-                <a href="suppliers.php" class="nav-panel-a"><li class="nav-panel-li">SUPPLIER</li></a>
+                <a href="inventory.php" class="nav-panel-a first "><li class="nav-panel-li">INVENTORY</li></a>
+                <a href="suppliers.php" class="nav-panel-a"><li class="nav-panel-li on-page">SUPPLIER</li></a>
                 <a href="sales.php" class="nav-panel-a"><li class="nav-panel-li">SALES</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">ORDERS</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">CLIENT ORDERS</li></a>
@@ -48,24 +48,23 @@
    
             <section class="tables">
                 <form class="search-tab" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-                    <input class="search" type="text" placeholder="search" name="item_id">
+                    <input class="search" type="text" placeholder="search" name="supplier_id">
                     <button type="submit" id="search_btn"><ion-icon class="search-button-ion" name="search" ></button>
                 </form>
                 <table class="search-inv" id="search-inv" >
                     <tr>
-                        <th>Item ID</th>
-                        <th>Item Category</th>
-                        <th>Item Name</th>
-                        <th>Quantity</th>
-                        <th>Cost</th>
+                        <th>Supplier ID</th>
+                        <th>Supplier Name</th>
+                        <th>Telephone</th>
+                        <th>Address</th>
                 </tr>
                 <?php
                     if($_SERVER["REQUEST_METHOD"]=="POST"){
 
                         //SQL
-                        $sql="EXEC select_inv  @ItemID= ? ";
-                        $itemid=trim($_POST["item_id"]);
-                        $param=array($itemid);
+                        $sql="EXEC select_supp @SupplierID = ? ";
+                        $supplierid=trim($_POST["supplier_id"]);
+                        $param=array($supplierid);
 
                         if($stmt=sqlsrv_prepare($conn,$sql,$param)){
                             if(sqlsrv_execute($stmt)){
@@ -74,11 +73,10 @@
                                         echo    
                                         "
                                         <tr>
-                                            <td>$rws[ItemID]</td>
-                                            <td>$rws[Item_category]</td>
-                                            <td>$rws[Item_name]</td>
-                                            <td>$rws[Quantity]</td>
-                                            <td>Ksh $rws[Cost]</td>
+                                            <td>$rws[supplierID]</td>
+                                            <td>$rws[s_name]</td>
+                                            <td>$rws[Tel_no]</td>
+                                            <td>$rws[s_address]</td>
                                         </tr>";
                                     } 
                                 }else{
@@ -97,11 +95,10 @@
                         echo    
                             "
                             <tr>
-                            <td>$row[ItemID]</td>
-                            <td>$row[Item_category]</td>
-                            <td>$row[Item_name]</td>
-                            <td>$row[Quantity]</td>
-                            <td>Ksh $row[Cost]</td>
+                            <td>$row[supplierID]</td>
+                            <td>$row[s_name]</td>
+                            <td>$row[Tel_no]</td>
+                            <td>$row[s_address]</td>
                             </tr>";
                     }    
                     }   

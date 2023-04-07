@@ -57,31 +57,32 @@
                     $itemcost=trim($_POST["item_cost"]);
                     $itemsupplier=trim($_POST["item_supplier"]);
 
+                    $sq="SELECT SupplierID FROM suppliers  WHERE s_name= ? ";
+                    $par1=array($itemsupplier);
+                    $st=sqlsrv_prepare($conn,$sq,$par1);
+                    if(sqlsrv_execute($st)){
+                        while($rw1=sqlsrv_fetch_array($st,SQLSRV_FETCH_ASSOC)){
+                            $suppid=$rw1['SupplierID'];
+                        }
+                    
+                }
+
                     $sql2="INSERT INTO inventory (ItemID,Item_category,Item_name,Quantity,Cost,supplierID) VALUES (?,?,?,?,?,?)";
-                    $param=array($itemid,$itemcategory,$itemname,$itemquantity,$itemcost,$itemsupplier);
+                    $param=array($itemid,$itemcategory,$itemname,$itemquantity,$itemcost,$suppid);
                     if($stmt=sqlsrv_prepare($conn,$sql2,$param)){
                         if(sqlsrv_execute($stmt)){
                             $status_insert=1;
-                    }else{
-                    die(print_r(sqlsrv_errors()));
-                    }   
+                        }  
+                        else 
+                        die(print_r(sqlsrv_errors())); 
                     }
                 }
                 if($err){
                     $er="Error in submiting. Click form to see error.";
                 }
-            }
-            else{
-                die(print_r(sqlsrv_errors()));
-            }
-        }else{
-            die(print_r(sqlsrv_errors()));
-        }
-
-        //SQL
-       
-      
-     }
+            }   
+        }      
+    }
 
     if( !empty($_POST["sup-submit"]) and $_SERVER["REQUEST_METHOD"]=="POST"){
     
@@ -122,10 +123,10 @@
                             $status_insert=1;
                         }
                   
-                }
-                if($serr || $serr2 || $serr3 || $serr4 || $serr5){
-                    $er2="Error in submiting. Click form to see error.";
-                }
+                    }
+                    if($serr || $serr2 || $serr3 || $serr4 || $serr5){
+                        $er2="Error in submiting. Click form to see error.";
+                    }
             }
         } 
     }
@@ -186,15 +187,14 @@ if( !empty($_POST["sale-submit"]) and $_SERVER["REQUEST_METHOD"]=="POST"){
                         $status_insert=1;
                     }
    
-            }
-            if($sserr || $sserr2 || $sserr3 || $sserr4 || $sserr5){
-                $er3="Error in submiting. Click form to see error.";
-            }
+                }
+                if($sserr || $sserr2 || $sserr3 || $sserr4 || $sserr5){
+                    $er3="Error in submiting. Click form to see error.";
+                }
         }
     } 
 }
 }
-
 
 if( !empty($_POST["ord-submit"]) and $_SERVER["REQUEST_METHOD"]=="POST"){
     
@@ -244,6 +244,7 @@ if( !empty($_POST["ord-submit"]) and $_SERVER["REQUEST_METHOD"]=="POST"){
                 else{
                     die(print_r(sqlsrv_errors()));
                 }
+
                 $sq2="SELECT SupplierID FROM suppliers  WHERE s_name= ? ";
                 $par1=array($sup);
                 $st=sqlsrv_prepare($conn,$sq2,$par1);
@@ -264,14 +265,15 @@ if( !empty($_POST["ord-submit"]) and $_SERVER["REQUEST_METHOD"]=="POST"){
                     if(sqlsrv_execute($stmt)){
                         $status_insert=1;
                     }
-   
+                }
+                sqlsrv_free_stmt($stmt);
+                if($ssserr || $ssserr2 || $ssserr3 || $ssserr4 || $ssserr5){
+                    $er4="Error in submiting. Click form to see error.";
+                }
             }
-            if($ssserr || $ssserr2 || $ssserr3 || $ssserr4 || $ssserr5){
-                $er4="Error in submiting. Click form to see error.";
-            }
-        }
-    } 
-}
+        }    
+    }
+    
 }
 
 if( !empty($_POST["clo-submit"]) and $_SERVER["REQUEST_METHOD"]=="POST"){
@@ -358,8 +360,6 @@ if( !empty($_POST["clo-submit"]) and $_SERVER["REQUEST_METHOD"]=="POST"){
                     die(print_r(sqlsrv_errors()));
                 }
                 
-               
-
                 //SQL
                 $sql221="INSERT INTO Client_orders (client_orderID,client_ID,client_name,client_email,OrderID) VALUES (?,?,?,?,?)";
                 $param21=array($cloid,$clientid,$clientname,$clientemail,$orderid);
@@ -370,25 +370,24 @@ if( !empty($_POST["clo-submit"]) and $_SERVER["REQUEST_METHOD"]=="POST"){
                         $sql22="INSERT INTO orders (OrderID,Item_ID,Qty_ordered,SupplierID,Date_of_order) VALUES (?,?,?,?,'$dt')";
                         $param2=array($orderid,$itmid,$qty,$itmid1);
                         if($stmt=sqlsrv_prepare($conn,$sql22,$param2)){
-                        if(sqlsrv_execute($stmt)){
-                            $status_insert=1;
+                            if(sqlsrv_execute($stmt)){
+                                $status_insert=1;
+                            }
                         }
-                    }
-   
                 }
 
                  
-            if($sssserr||$sssserr2||$sssserr3||$sssserr4||$sssserr5||$sssserr6||$sssserr7||$sssserr8||$sssserr9||$sssserr10){
-                $er5="Error in submiting. Click form to see error.";
+                if($sssserr||$sssserr2||$sssserr3||$sssserr4||$sssserr5||$sssserr6||$sssserr7||$sssserr8||$sssserr9||$sssserr10){
+                    $er5="Error in submiting. Click form to see error.";
+                }
             }
-
-        }
     } 
 }
 }
+sqlsrv_close($conn); 
 }
         
-    
+
     
 ?>
 <!DOCTYPE html>
@@ -410,41 +409,41 @@ if( !empty($_POST["clo-submit"]) and $_SERVER["REQUEST_METHOD"]=="POST"){
         <section class="nav-panel">
             <ul class="nav-panel-ul">
                 <a href="inventory.php" class="nav-panel-a first "><li class="nav-panel-li">INVENTORY</li></a>
-                <a href="#" class="nav-panel-a"><li class="nav-panel-li">SUPPLIER</li></a>
-                <a href="#" class="nav-panel-a"><li class="nav-panel-li">SALED</li></a>
+                <a href="suppliers.php" class="nav-panel-a"><li class="nav-panel-li">SUPPLIER</li></a>
+                <a href="#" class="nav-panel-a"><li class="nav-panel-li">SALES</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">ORDERS</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">CLIENT ORDERS</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">DELIVERY</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">SUPPLIER PAYMENT</li></a>
-                <a href="#" class="nav-panel-a"><li class="nav-panel-li on-page">ENTRY FORMS</li></a>
+                <a href="entry_forms.php" class="nav-panel-a"><li class="nav-panel-li on-page">ENTRY FORMS</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">REPORTS</li></a>
             </ul>
     </body>
     <section class="nav-sec">   
             <div class="nav-button-container">
             <div class="nav-buttons" id="nav-button1-1"  >
-                <p class="button-desc">INVENTORY FORM</p>
+                <p class="button-desc" id="button-desc1">INVENTORY FORM</p>
                 <span class="error_msgf"><?php echo $er;?></span>
             </div>
             
 
             <div class="nav-buttons" id="nav-button2-2" >
-                <p class="button-desc">SUPPLIERS FORM</p>
+                <p class="button-desc" id="button-desc2">SUPPLIERS FORM</p>
                 <span class="error_msgf"><?php echo $er2;?></span>
             </div>
 
             <div class="nav-buttons" id="nav-button3-3" >
-                <p class="button-desc">SALES FORM</p>
+                <p class="button-desc" id="button-desc3">SALES FORM</p>
                 <span class="error_msgf"><?php echo $er3;?></span>
             </div>
            
             <div class="nav-buttons" id="nav-button4-4" >
-                <p class="button-desc">ORDERS FORM</p>
+                <p class="button-desc" id="button-desc4">ORDERS FORM</p>
                 <span class="error_msgf"><?php echo $er4;?></span>
             </div>
             
             <div class="nav-buttons" id="nav-button5-5" >
-                <p class="button-desc">CLIENT ORDERS FORM</p>
+                <p class="button-desc" id="button-desc5">CLIENT ORDERS FORM</p>
                 <span class="error_msgf"><?php echo $er5;?></span>
             </div>
             
@@ -481,7 +480,20 @@ if( !empty($_POST["clo-submit"]) and $_SERVER["REQUEST_METHOD"]=="POST"){
                     <span class="error_msg"><?php echo $err5;?></span>
                 </label>
                 <label class="l-1" for="item_supplier">Supplier
-                    <input type="text" placeholder="item supplier" class="item" name="item_supplier" id="item_supplier" required><br>
+                    <input type="text" placeholder="item supplier" class="item" name="item_supplier" id="item_supplier" list="supp" required><br>
+                    <datalist id="supp">
+                    <?php
+                        //SQL
+                        $ssql1="SELECT s_name FROM suppliers";
+                        if($rs1=sqlsrv_query($conn,$ssql1)){
+                            while($row1=sqlsrv_fetch_array($rs1,SQLSRV_FETCH_ASSOC)){
+                                echo"<option value='$row1[s_name]'>";
+
+                            }
+                        }else   
+                            die(print_r(sqlsrv_errors())); 
+                    ?>  
+                    </datalist>
                     <span class="error_msg"><?php echo $err6;?></span>
                 </label>
                 <input class="s-button" type="submit" name="inv-submit" value="ADD" id="s-button"/><input class="back-button" id="back-button"  value="BACK"/>
@@ -621,11 +633,11 @@ if( !empty($_POST["clo-submit"]) and $_SERVER["REQUEST_METHOD"]=="POST"){
                     <span class="error_msg"><?php echo $sssserr3;?></span>
                 </label>
                 <label class="l-5" for="client_name">Name
-                    <input type="text" placeholder="name" class="item" name="client_name" id="client_name" required><br>
+                    <input type="text" placeholder="client name" class="item" name="client_name" id="client_name" required><br>
                     <span class="error_msg"><?php echo $sssserr4;?></span>
                 </label>
                 <label class="l-5" for="client_email">Email
-                    <input type="email" placeholder="email" class="item" name="client_email" id="client_email"required><br>
+                    <input type="email" placeholder=" client email" class="item" name="client_email" id="client_email"required><br>
                     <span class="error_msg"><?php echo $sssserr5 ;?></span>
                 </label>
                 <label class="l-5" for="order_id">Order ID

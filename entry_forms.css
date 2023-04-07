@@ -177,7 +177,6 @@ h2{
 
 .s-button,.back-button,.s-button-l,.back-button-l{
     float: left;
-    
     position: absolute;
     background-color: var(--orange-color);
     border: 0;
