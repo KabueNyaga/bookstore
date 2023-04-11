@@ -28,31 +28,31 @@ $user=$_SESSION["username"];
             <h2 class="dash">Dashboard</h2>
             <div class="nav-button-container">
             <div class="nav-buttons" id="nav-button1" >
-                <p class="button-desc">INVENTORY</p>
+                <p class="button-desc d1">INVENTORY</p>
             </div>
             <div class="nav-buttons" id="nav-button2" >
-            <p class="button-desc">SUPPLIERS</p>
+            <p class="button-desc d2">SUPPLIERS</p>
             </div>
             <div class="nav-buttons" id="nav-button3" >
-                <p class="button-desc">SALES</p>
+                <p class="button-desc d3">SALES</p>
             </div>
             <div class="nav-buttons" id="nav-button4" >
-            <p class="button-desc">ORDERS</p>
+            <p class="button-desc d4">ORDERS</p>
             </div>
             <div class="nav-buttons" id="nav-button5" >
-            <p class="button-desc">CLIENT ORDERS</p>
+            <p class="button-desc d5">CLIENT ORDERS</p>
             </div>
             <div class="nav-buttons" id="nav-button6">
-            <p class="button-desc">DELIVERIES</p>
+            <p class="button-desc d6">DELIVERIES</p>
             </div>
             <div class="nav-buttons" id="nav-button7" >
-            <p class="button-desc">SUPPLIER PAYMENT</p>
+            <p class="button-desc d7">SUPPLIER PAYMENT</p>
             </div>
             <div class="nav-buttons" id="nav-button8">
-            <p class="button-desc">ENTRY FORMS</p>
+            <p class="button-desc d8">ENTRY FORMS</p>
             </div>
             <div class="nav-buttons" id="nav-button9" >
-                <p class="button-desc">REPORTS</p>
+                <p class="button-desc d9">REPORTS</p>
             </div>
             </div>  
         </section>

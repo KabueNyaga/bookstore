@@ -2,24 +2,24 @@ document.addEventListener('click',function(l){
     let el_id=l.target.id;
     
     
-        if(el_id=='nav-button1') 
+        if(el_id=='nav-button1' || document.querySelector(".d1")) 
             location.href='inventory.php';
-        if(el_id=='nav-button2')
-            location.href='#';
-        if(el_id=='nav-button3')
-            location.href='#';
-        if(el_id=='nav-button4')
-            location.href='#';
-        if(el_id=='nav-button5')
-            location.href="#";
-        if(el_id=='nav-button6')
-            location.href='#';
-        if(el_id=='nav-button7')
-            location.href='#';
-        if(el_id=='nav-button8')
+        if(el_id=='nav-button2' || document.querySelector(".d2"))
+            location.href='suppliers.php';
+        if(el_id=='nav-button3' || document.querySelector(".d3"))
+            location.href='sales.php';
+        if(el_id=='nav-button4' || document.querySelector(".d4"))
+            location.href='orders.pph';
+        if(el_id=='nav-button5' || document.querySelector(".d5"))
+            location.href="client_orders.php";
+        if(el_id=='nav-button6' || document.querySelector(".d6"))
+            location.href='deliveries.php';
+        if(el_id=='nav-button7' || document.querySelector(".d7"))
+            location.href='supplier_pay.php';
+        if(el_id=='nav-button8' || document.querySelector(".d8"))
             location.href='entry_forms.php';
-        if(el_id=='nav-button9')
-            location.href='#';
+        if(el_id=='nav-button9' || document.querySelector(".d9"))
+            location.href='reports.php';
         if(el_id=='nav-button1-1' || el_id=="button-desc1"){
             document.body.style.background="linear-gradient(55deg,#3c3c43,#d87821)"; 
             document.body.style.height="665px"

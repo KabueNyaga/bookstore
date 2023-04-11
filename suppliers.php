@@ -37,10 +37,10 @@
                 <a href="inventory.php" class="nav-panel-a first "><li class="nav-panel-li">INVENTORY</li></a>
                 <a href="suppliers.php" class="nav-panel-a"><li class="nav-panel-li on-page">SUPPLIER</li></a>
                 <a href="sales.php" class="nav-panel-a"><li class="nav-panel-li">SALES</li></a>
-                <a href="#" class="nav-panel-a"><li class="nav-panel-li">ORDERS</li></a>
-                <a href="#" class="nav-panel-a"><li class="nav-panel-li">CLIENT ORDERS</li></a>
-                <a href="#" class="nav-panel-a"><li class="nav-panel-li">DELIVERY</li></a>
-                <a href="#" class="nav-panel-a"><li class="nav-panel-li">SUPPLIER PAYMENT</li></a>
+                <a href="orders.php" class="nav-panel-a"><li class="nav-panel-li">ORDERS</li></a>
+                <a href="client_orders.php" class="nav-panel-a"><li class="nav-panel-li">CLIENT ORDERS</li></a>
+                <a href="deliveries.php" class="nav-panel-a"><li class="nav-panel-li">DELIVERY</li></a>
+                <a href="supplier_pay.php" class="nav-panel-a"><li class="nav-panel-li">SUPPLIER PAYMENT</li></a>
                 <a href="entry_forms.php" class="nav-panel-a"><li class="nav-panel-li">ENTRY FORMS</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">REPORTS</li></a>
             </ul>

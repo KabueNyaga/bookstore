@@ -9,10 +9,17 @@
 
     require_once "config.php";
 
-    $sql="SELECT * FROM inventory";
+    $sql="	select 
+    Suplier_payment.paymentID,
+    Suplier_payment.supplierID,
+    suppliers.s_name,
+    Suplier_payment.amount_paid,
+    Suplier_payment.payment_method,
+    Suplier_payment.Date_of_payment from Suplier_payment join
+    suppliers on suppliers.supplierID=Suplier_payment.supplierID;";
     $result=sqlsrv_query($conn,$sql);
     $rows=sqlsrv_fetch_array($result,SQLSRV_FETCH_ASSOC);
-    
+    $date_conv="";
 
 ?>
 
@@ -34,13 +41,13 @@
         </section>
         <section class="nav-panel">
             <ul class="nav-panel-ul">
-                <a href="inventory.php" class="nav-panel-a first "><li class="nav-panel-li on-page">INVENTORY</li></a>
-                <a href="suppliers.php" class="nav-panel-a"><li class="nav-panel-li">SUPPLIER</li></a>
-                <a href="sales.php" class="nav-panel-a"><li class="nav-panel-li">SALES</li></a>
-                <a href="orders.php" class="nav-panel-a"><li class="nav-panel-li">ORDERS</li></a>
-                <a href="client_orders.php" class="nav-panel-a"><li class="nav-panel-li">CLIENT ORDERS</li></a>
-                <a href="deliveries.php" class="nav-panel-a"><li class="nav-panel-li">DELIVERY</li></a>
-                <a href="supplier_pay.php" class="nav-panel-a"><li class="nav-panel-li">SUPPLIER PAYMENT</li></a>
+                <a href="inventory.php" class="nav-panel-a first "><li class="nav-panel-li">INVENTORY</li></a>
+                <a href="suppliers.php" class="nav-panel-a"><li class="nav-panel-li ">SUPPLIER</li></a>
+                <a href="sales.php" class="nav-panel-a"><li class="nav-panel-li ">SALES</li></a>
+                <a href="orders.php" class="nav-panel-a"><li class="nav-panel-li ">ORDERS</li></a>
+                <a href="client_orders.php" class="nav-panel-a"><li class="nav-panel-li ">CLIENT ORDERS</li></a>
+                <a href="deliveries.php" class="nav-panel-a"><li class="nav-panel-li ">DELIVERY</li></a>
+                <a href="supplier_pay.php" class="nav-panel-a"><li class="nav-panel-li on-page">SUPPLIER PAYMENT</li></a>
                 <a href="entry_forms.php" class="nav-panel-a"><li class="nav-panel-li">ENTRY FORMS</li></a>
                 <a href="#" class="nav-panel-a"><li class="nav-panel-li">REPORTS</li></a>
             </ul>
@@ -48,37 +55,40 @@
    
             <section class="tables">
                 <form class="search-tab" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
-                    <input class="search" type="text" placeholder="search" name="item_id">
+                    <input class="search" type="text" placeholder="search" name="sale_id">
                     <button type="submit" id="search_btn"><ion-icon class="search-button-ion" name="search" ></button>
                 </form>
                 <table class="search-inv" id="search-inv" >
                     <tr>
-                        <th>Item ID</th>
-                        <th>Item Category</th>
-                        <th>Item Name</th>
-                        <th>Quantity</th>
-                        <th>Cost</th>
+                        <th>Pay ID</th>
+                        <th>Supplier ID</th>
+                        <th>Supplier Name</th>
+                        <th>Amount</th>
+                        <th>Pay Method</th>
+                        <th>Day</th>
                 </tr>
                 <?php
                     if($_SERVER["REQUEST_METHOD"]=="POST"){
 
                         //SQL
-                        $sql="EXEC select_inv  @ItemID= ? ";
-                        $itemid=trim($_POST["item_id"]);
-                        $param=array($itemid);
+                        $sql="exec select_supp_pay @payID= ? ;";
+                        $saleid=trim($_POST["sale_id"]);
+                        $param=array($saleid);
 
                         if($stmt=sqlsrv_prepare($conn,$sql,$param)){
                             if(sqlsrv_execute($stmt)){
                                 if(sqlsrv_has_rows($stmt)){
-                                    while($rws=sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC)){
+                                    while($rw=sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC)){
+                                        $date_conv=$rw['Date_of_payment'] -> format('Y-m-d');
                                         echo    
                                         "
                                         <tr>
-                                            <td>$rws[ItemID]</td>
-                                            <td>$rws[Item_category]</td>
-                                            <td>$rws[Item_name]</td>
-                                            <td>$rws[Quantity]</td>
-                                            <td>Ksh $rws[Cost]</td>
+                                        <td>$rw[paymentID]</td>
+                                        <td>$rw[supplierID]</td>
+                                        <td>$rw[s_name]</td>
+                                        <td>$rw[amount_paid]</td>
+                                        <td>$rw[payment_method]</td>
+                                        <td>$date_conv</td>
                                         </tr>";
                                     } 
                                 }else{
@@ -94,14 +104,16 @@
                     else{
                         
                     While($row=sqlsrv_fetch_array($result,SQLSRV_FETCH_ASSOC)){
+                        $date_conv=$row['Date_of_payment'] -> format('Y-m-d');
                         echo    
                             "
                             <tr>
-                            <td>$row[ItemID]</td>
-                            <td>$row[Item_category]</td>
-                            <td>$row[Item_name]</td>
-                            <td>$row[Quantity]</td>
-                            <td>Ksh $row[Cost]</td>
+                            <td>$row[paymentID]</td>
+                            <td>$row[supplierID]</td>
+                            <td>$row[s_name]</td>
+                            <td>$row[amount_paid]</td>
+                            <td>$row[payment_method]</td>
+                            <td>$date_conv</td>
                             </tr>";
                     }    
                     }   
