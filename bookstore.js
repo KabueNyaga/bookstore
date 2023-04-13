@@ -19,7 +19,7 @@ document.addEventListener('click',function(l){
         if(el_id=='nav-button8' || document.querySelector(".d8"))
             location.href='entry_forms.php';
         if(el_id=='nav-button9' || document.querySelector(".d9"))
-            location.href='reports.php';
+            location.href='#';
         if(el_id=='nav-button1-1' || el_id=="button-desc1"){
             document.body.style.background="linear-gradient(55deg,#3c3c43,#d87821)"; 
             document.body.style.height="665px"

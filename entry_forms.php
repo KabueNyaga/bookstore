@@ -27,7 +27,7 @@
 
 
         //SQL  
-        $sql="SELECT Item_name FROM inventory WHERE ItemID = ? ";
+        $sql="SELECT Item_name FROM inventory WHERE ItemID = ? ;";
         $itemid=trim($_POST["item_id"]);
         $param=array($itemid);
         if($stmt=sqlsrv_prepare($conn,$sql,$param)){

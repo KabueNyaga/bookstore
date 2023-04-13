@@ -10,16 +10,16 @@
     require_once "config.php";
 
     $sql="select 
-	Deliveries.OrderID,
+	Deliveries.deliveryID,
 	orders.Item_ID,
 	inventory.Item_name,
 	Deliveries.Date_delivered,
-	Deliveries.supplierID,
+	Deliveries.supplier_id,
 	suppliers.s_name
 	from Deliveries join 
-	orders on orders.OrderID=Deliveries.OrderID join
+	orders on orders.OrderID=Deliveries.deliveryID join
 	inventory on inventory.ItemID=orders.Item_ID join
-	suppliers on suppliers.supplierID=Deliveries.supplierID;";
+	suppliers on suppliers.supplierID=Deliveries.supplier_id;";
     $result=sqlsrv_query($conn,$sql);
     $rows=sqlsrv_fetch_array($result,SQLSRV_FETCH_ASSOC);
     $date_conv="";
@@ -86,11 +86,11 @@
                                         echo    
                                         "
                                         <tr>
-                                        <td>$rw[OrderID]</td>
+                                        <td>$rw[deliveryID]</td>
                                         <td>$rw[Item_ID]</td>
                                         <td>$rw[Item_name]</td>
                                         <td>$date_conv</td>
-                                        <td>$rw[supplierID]</td>
+                                        <td>$rw[supplier_id]</td>
                                         <td>$rw[s_name]</td>
                                         </tr>";
                                     } 
@@ -111,11 +111,11 @@
                         echo    
                             "
                             <tr>
-                            <td>$row[OrderID]</td>
+                            <td>$row[deliveryID]</td>
                             <td>$row[Item_ID]</td>
                             <td>$row[Item_name]</td>
                             <td>$date_conv</td>
-                            <td>$row[supplierID]</td>
+                            <td>$row[supplier_id]</td>
                             <td>$row[s_name]</td>
                             </tr>";
                     }    

@@ -86,6 +86,8 @@ delete from inventory where ItemID='ss';
 
 create procedure select_inv @ItemID nvarchar(255) as select * from inventory where ItemID =@ItemID;
 create procedure select_supp @SupplierID nvarchar(255) as select * from suppliers where supplierID =@SupplierID;
+create procedure select_sale @saleID nvarchar(255) as select sales.salesID,sales.Date_of_purchase,sales.Mode_of_payment,inventory.ItemID,inventory.Item_category, inventory.Item_name,sales.Quantity,inventory.Cost,sales.totals  from inventory inner join sales on sales.itemID=inventory.ItemID  where salesID =@saleID;
+exec select_sale @saleID='sl001';
 exec select_inv @ItemID='a005';
 exec select_supp @SupplierID='spp011';
 drop procedure select_inv;
@@ -212,3 +214,264 @@ update sales set totals=69000 where salesID='sl007';
 insert into sales(totals) values (12000) where salesID='sl051';
 
 exec sp_rename 'sales.ItemID' , 'itemID';
+exec sp_rename 'Deliveries.orderID', 'deliveryID';
+use bookstore;
+select * from orders;
+
+create procedure select_sale @saleID nvarchar(255) as select sales.salesID,sales.Date_of_purchase,sales.Mode_of_payment,inventory.ItemID,inventory.Item_category, inventory.Item_name,sales.Quantity,inventory.Cost,sales.totals  from inventory inner join sales on sales.itemID=inventory.ItemID  where salesID =@saleID;
+exec select_sale @saleID='sl001';
+create procedure select_ord @orderID nvarchar(255) as select  orders.OrderID,orders.Item_ID,inventory.Item_name,orders.Qty_ordered,orders.SupplierID,suppliers.s_name,orders.Date_of_order from orders join inventory on inventory.ItemID=orders.Item_ID join suppliers on suppliers.supplierID=orders.SupplierID where OrderID=@orderID;
+exec select_ord @orderID='od002';
+use bookstore;
+select * from Client_orders;
+select Client_orders.client_orderID,Client_orders.client_ID,Client_orders.client_name,Client_orders.client_email,Client_orders.OrderID,orders.Item_ID,inventory.Item_name,orders.Qty_ordered,orders.Date_of_order from Client_orders join orders on orders.OrderID=Client_orders.OrderID join inventory on inventory.ItemID=orders.Item_ID ;
+create procedure select_clo @cloID nvarchar(255) as select Client_orders.client_orderID,Client_orders.client_ID,Client_orders.client_name,Client_orders.client_email,Client_orders.OrderID,orders.Item_ID,inventory.Item_name,orders.Qty_ordered,orders.Date_of_order from Client_orders join orders on orders.OrderID=Client_orders.OrderID join inventory on inventory.ItemID=orders.Item_ID where client_orderID=@cloID; ;
+exec select_clo @cloID='clo001';
+drop procedure select_clo;
+select * from Deliveries;
+select Deliveries.OrderID,Deliveries.Date_delivered,Deliveries.supplierID,suppliers.s_name from Deliveries inner join suppliers on suppliers.supplierID=Deliveries.supplierID;
+create procedure select_del @delID nvarchar(255) as select 
+	Deliveries.OrderID,
+	orders.Item_ID,
+	inventory.Item_name,
+	Deliveries.Date_delivered,
+	Deliveries.supplierID,
+	suppliers.s_name
+	from Deliveries join 
+	orders on orders.OrderID=Deliveries.OrderID join
+	inventory on inventory.ItemID=orders.Item_ID join
+	suppliers on suppliers.supplierID=Deliveries.supplierID where Deliveries.OrderID=@delID;
+exec select_del @delID='od010';
+drop procedure select_del;
+alter table Deliveries alter column Date_delivered date;
+
+select 
+	Deliveries.OrderID,
+	orders.Item_ID,
+	inventory.Item_name,
+	Deliveries.Date_delivered,
+	Deliveries.supplierID,
+	suppliers.s_name
+	from Deliveries join 
+	orders on orders.OrderID=Deliveries.OrderID join
+	inventory on inventory.ItemID=orders.Item_ID join
+	suppliers on suppliers.supplierID=Deliveries.supplierID;
+
+	select * from Suplier_payment;
+	select 
+		Suplier_payment.paymentID,
+		Suplier_payment.supplierID,
+		suppliers.s_name,
+		Suplier_payment.amount_paid,
+		Suplier_payment.payment_method,
+		Suplier_payment.Date_of_payment from Suplier_payment join
+		suppliers on suppliers.supplierID=Suplier_payment.supplierID;
+
+create procedure select_supp_pay @payID nvarchar(255) as select 
+		Suplier_payment.paymentID,
+		Suplier_payment.supplierID,
+		suppliers.s_name,
+		Suplier_payment.amount_paid,
+		Suplier_payment.payment_method,
+		Suplier_payment.Date_of_payment from Suplier_payment join
+		suppliers on suppliers.supplierID=Suplier_payment.supplierID where Suplier_payment.paymentID=@payID;
+
+	exec select_supp_pay @payID='p002';
+	alter table Suplier_payment alter column Date_of_payment date;
+
+	SELECT sales.ItemID, SUM(sales.quantity * Inventory.Cost) AS total_rev FROM sales
+INNER JOIN  Inventory ON sales.ItemID =Inventory.ItemID
+WHERE sales.Date_of_purchase BETWEEN '2022/06/01' AND '2022/12/31'
+GROUP BY sales.ItemID;
+
+SELECT itemID,quantity, 
+CASE 
+	WHEN quantity >50 THEN 'High'
+	WHEN quantity >10 THEN 'Average'
+	ELSE 'Low'
+	END AS comment
+FROM Inventory;
+
+use master;
+	grant connect SQL to bookstore;
+
+select SCHEMA_NAME();
+select * from sys.schemas;
+
+use bookstore;
+
+create database Bookstore_db;
+use Bookstore_db;
+
+
+-----------CREATING TABLES-----------
+create table inventory(
+	item_id varchar(10) not null primary key,
+    item_category varchar(50) not null,
+    item_name varchar (50) not null,
+    quantity int not null,
+    cost money not null,
+	constraint CK_inventory_cost
+	CHECK (cost > 0),
+	supplierID varchar(10) not null,
+	--constraint FK_suppliers_inventory
+	--foreign key (supplierID) references suppliers(supplierID)
+	);
+	
+
+    
+
+    
+create table sales(
+	sale_id varchar(10) not null primary key,
+    itemId varchar(10),
+    --constraint FK_inventory_sales
+    --foreign key (itemId) references inventory(itemId),
+	mode_of_payment varchar(15) not null,
+	CONSTRAINT CK_paymentMode
+    CHECK (Mode_of_Payment IN ('Cash','Cheque','Credit_card')),
+    date_of_purchase date not null,
+    quantity int not null,
+    total_price int); 
+    
+create table suppliers (
+	supplier_id varchar(10) not null primary key,
+    s_name varchar(50) not null,
+    phone int not null unique,
+    address varchar(50) not null
+);
+
+create table orders(
+	order_id varchar(10) not null primary key,
+    Item_id varchar(10) not null,
+    --constraint FK_orders_inventory
+    --foreign key (item_Id) references inventory(itemId),
+    quantity int not null,
+    supplierid varchar(10) not null,
+    --foreign key (supplierid) references suppliers(supplierId),
+	date_of_order date not null
+);
+
+
+create table client_orders(
+	client_orderid varchar(10) not null primary key,
+	client_id varchar(15) not null,
+    client_name varchar(50) not null,
+    client_email varchar(50) unique,
+    Orderid varchar(10) not null,
+    --foreign key (orderid) references orders(orderId),
+	quantity int not null
+    );
+
+    create table deliveries(
+		deliverly_id varchar(10) not null primary key,
+        date_delivered date not null,
+		Invoice_no varchar(50) not null,
+		supplierID varchar(10),
+		--foreign key(supplierID) references suppliers(supplierID)
+);
+
+
+create table suplier_payment(
+	paymentid varchar(10) not null primary key,
+    supplierId varchar(10) not null,
+    --foreign key (supplierId) references suppliers(supplierID),
+    date_of_payment date not null,
+    payment_method varchar(15),
+    amount_paid money not null DEFAULT 0,
+	orderID varchar(10),
+	--foreign key (orderID) references orders(orderID),
+	);
+
+
+------------------ALTERING TALBLES---------------------
+
+
+
+ALTER TABLE inventory
+ADD constraint FK_suppliers_inventory
+FOREIGN KEY (supplierID) REFERENCES suppliers(supplierID);
+
+
+ALTER TABLE inventory
+ADD constraint CK_inventory_cost
+CHECK (Cost > 0);
+ 
+
+ALTER TABLE sales
+ADD constraint FK_inventory_sales
+FOREIGN KEY (ItemID) REFERENCES inventory(ItemID);
+
+ALTER TABLE suppliers
+ADD CONSTRAINT UQ_Suppliers_tel_no
+UNIQUE(Tel_no);
+select * from suppliers;
+ALTER TABLE orders
+ADD constraint FK_inventory_orders
+FOREIGN KEY (Item_ID) REFERENCES inventory(ItemID);
+
+ALTER TABLE orders
+ADD constraint FK_supplier_orders
+FOREIGN KEY (SupplierID) REFERENCES suppliers(supplierID);
+
+ALTER TABLE Client_orders
+ADD constraint UQ_email_clientOrders
+UNIQUE(client_email);
+
+ALTER TABLE Client_orders
+ADD CONSTRAINT FK_orders_clientOrders
+FOREIGN KEY (orderID) REFERENCES orders(orderID);
+
+ALTER TABLE Deliveries
+ADD CONSTRAINT FK_suppliers_deliveries
+FOREIGN KEY (supplier_id) REFERENCES suppliers(supplierID);
+
+ALTER TABLE Suplier_payment
+ADD CONSTRAINT FK_suppliers_supplierPayment
+FOREIGN KEY (supplierID) REFERENCES suppliers(supplierID);
+
+ALTER TABLE Suplier_payment
+ADD orderID nvarchar(20);
+
+
+
+
+ALTER TABLE Suplier_payment
+ADD CONSTRAINT DF_payment_amount
+DEFAULT 0 FOR amount_paid;
+
+select * from Deliveries;
+exec sp_help Deliveries;
+
+select Deliveries.deliveryID,Deliveries.Date_delivered,Deliveries.supplier_id,suppliers.s_name from Deliveries inner join suppliers on suppliers.supplierID=Deliveries.supplier_id;
+
+select 
+	Deliveries.deliveryID,
+	orders.Item_ID,
+	inventory.Item_name,
+	Deliveries.Date_delivered,
+	Deliveries.supplier_id,
+	suppliers.s_name
+	from Deliveries join 
+	orders on orders.OrderID=Deliveries.deliveryID join
+	inventory on inventory.ItemID=orders.Item_ID join
+	suppliers on suppliers.supplierID=Deliveries.supplier_id;
+
+create procedure select_del @delID nvarchar(25) as select 
+Deliveries.deliveryID,
+orders.Item_ID,
+inventory.Item_name,
+Deliveries.Date_delivered,
+Deliveries.supplier_id,
+suppliers.s_name
+from Deliveries join 
+orders on orders.OrderID=Deliveries.deliveryID join
+inventory on inventory.ItemID=orders.Item_ID join
+suppliers on suppliers.supplierID=Deliveries.supplier_id where Deliveries.deliveryID=@delID;
+	drop procedure select_del;
+
+select * from inventory;
+select * from Client_orders;
+sp_helplogins;
+alter table suplier_payment  add constraint FK_supplierpayment_orders foreign key (orderID) references orders(OrderID);
+alter table suplier_payment alter column orderID varchar(10);
